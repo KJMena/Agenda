@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./estilos/estilos.css" />
+    <script src="./js/vue3.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Agenda de Contactos</title>
+</head>
+
+<body>
+    <header>
+        <h1>Agenda de Contactos</h1>
+    </header>
+
+    <section id="seccion">
+
+        <fieldset>
+            <legend>Agrega un contacto</legend>
+            Nombre:
+            <input v-model="nuevoNombre" type="text"> Telefono:
+            <input v-model="nuevoTelefono" type="text">
+            <br>Categoría:
+            <select v-model="nuevaCategoria"> 
+                <option value="Amigos">Amigos</option>
+                <option value="Familia">Familiar</option>
+                <option value="Trabajos">Trabajos</option>
+                <option value="Famosos">Famosos</option>
+            </select>
+            <br>
+            <button @click="agregarContacto()">Agregar</button>
+        </fieldset>
+        </br>
+        <article>
+            <table>
+                <tr>
+                    <th colspan="5">Contactos</th>
+                </tr>
+                <tr v-for="(contactos, index) in contactos" :key="index" :class="{ fondo: contactos.mensajes > 0 || contactos.llamadas > 0 }">
+                    <td>{{ contactos.nombre }}</td>
+                    <td>{{ contactos.telefono }}</td>
+                    <td>{{ contactos.categoria }}</td>
+
+                    <td>
+                        <button @click="contactos.llamadas++" :disabled="contactos.llamadas >= 15">+</button>
+                        <input type="number" v-model.number="contactos.llamadas" min="0" max="15" />
+                    </td>
+                    <td>
+                        <button @click="contactos.mensajes++" :disabled="contactos.mensajes >= 25">+</button>
+                        <input type="number" v-model.number="contactos.mensajes" min="0" max="25" />
+                    </td>
+
+
+                    <td><button @click="eliminarContacto(index)">Eliminar</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Total Llamadas:</strong></td>
+                    <td colspan="3">{{ totalLlamadas }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Total Mensajes:</strong></td>
+                    <td colspan="3">{{ totalMensajes }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Total Contactos:</strong></td>
+                    <td colspan="3">{{ totalContactos }}</td>
+                </tr>
+            </table>
+        </article>
+
+    </section>
+
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
